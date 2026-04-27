@@ -193,7 +193,8 @@ jobs:
         shell: bash
         run: |
           rustup toolchain install ${{ matrix.rust-version }}-${{ matrix.target }} \
-            --component clippy rustfmt \
+            --component clippy \
+            --component rustfmt \
             --no-self-update
           rustup default ${{ matrix.rust-version }}-${{ matrix.target }}
 
