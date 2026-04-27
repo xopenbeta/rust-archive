@@ -1,0 +1,363 @@
+name: Build Rust Archive
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - 'release-*'
+
+jobs:
+  build:
+    name: Build Rust ${{ matrix.rust-version }} (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # macOS Apple Silicon (macos-14) - 编译 x86_64 和 aarch64 两个版本
+          # Rust 1.70.0
+          - rust-version: '1.70.0'
+            os: macos-14
+            os-name: macos
+            target: x86_64-apple-darwin
+            arch: x64
+          - rust-version: '1.70.0'
+            os: macos-14
+            os-name: macos
+            target: aarch64-apple-darwin
+            arch: aarch64
+
+          # Rust 1.75.0
+          - rust-version: '1.75.0'
+            os: macos-14
+            os-name: macos
+            target: x86_64-apple-darwin
+            arch: x64
+          - rust-version: '1.75.0'
+            os: macos-14
+            os-name: macos
+            target: aarch64-apple-darwin
+            arch: aarch64
+
+          # Rust 1.80.0
+          - rust-version: '1.80.0'
+            os: macos-14
+            os-name: macos
+            target: x86_64-apple-darwin
+            arch: x64
+          - rust-version: '1.80.0'
+            os: macos-14
+            os-name: macos
+            target: aarch64-apple-darwin
+            arch: aarch64
+
+          # Rust 1.85.0
+          - rust-version: '1.85.0'
+            os: macos-14
+            os-name: macos
+            target: x86_64-apple-darwin
+            arch: x64
+          - rust-version: '1.85.0'
+            os: macos-14
+            os-name: macos
+            target: aarch64-apple-darwin
+            arch: aarch64
+
+          # Rust 1.86.0
+          - rust-version: '1.86.0'
+            os: macos-14
+            os-name: macos
+            target: x86_64-apple-darwin
+            arch: x64
+          - rust-version: '1.86.0'
+            os: macos-14
+            os-name: macos
+            target: aarch64-apple-darwin
+            arch: aarch64
+
+          # Linux x64 - 所有版本
+          - rust-version: '1.70.0'
+            os: ubuntu-22.04
+            os-name: linux
+            target: x86_64-unknown-linux-gnu
+            arch: x64
+          - rust-version: '1.75.0'
+            os: ubuntu-22.04
+            os-name: linux
+            target: x86_64-unknown-linux-gnu
+            arch: x64
+          - rust-version: '1.80.0'
+            os: ubuntu-22.04
+            os-name: linux
+            target: x86_64-unknown-linux-gnu
+            arch: x64
+          - rust-version: '1.85.0'
+            os: ubuntu-22.04
+            os-name: linux
+            target: x86_64-unknown-linux-gnu
+            arch: x64
+          - rust-version: '1.86.0'
+            os: ubuntu-22.04
+            os-name: linux
+            target: x86_64-unknown-linux-gnu
+            arch: x64
+
+          # Linux aarch64 - 所有版本
+          - rust-version: '1.70.0'
+            os: ubuntu-22.04-arm
+            os-name: linux
+            target: aarch64-unknown-linux-gnu
+            arch: aarch64
+          - rust-version: '1.75.0'
+            os: ubuntu-22.04-arm
+            os-name: linux
+            target: aarch64-unknown-linux-gnu
+            arch: aarch64
+          - rust-version: '1.80.0'
+            os: ubuntu-22.04-arm
+            os-name: linux
+            target: aarch64-unknown-linux-gnu
+            arch: aarch64
+          - rust-version: '1.85.0'
+            os: ubuntu-22.04-arm
+            os-name: linux
+            target: aarch64-unknown-linux-gnu
+            arch: aarch64
+          - rust-version: '1.86.0'
+            os: ubuntu-22.04-arm
+            os-name: linux
+            target: aarch64-unknown-linux-gnu
+            arch: aarch64
+
+          # Windows x64 - 所有版本
+          - rust-version: '1.70.0'
+            os: windows-2022
+            os-name: windows
+            target: x86_64-pc-windows-msvc
+            arch: x64
+          - rust-version: '1.75.0'
+            os: windows-2022
+            os-name: windows
+            target: x86_64-pc-windows-msvc
+            arch: x64
+          - rust-version: '1.80.0'
+            os: windows-2022
+            os-name: windows
+            target: x86_64-pc-windows-msvc
+            arch: x64
+          - rust-version: '1.85.0'
+            os: windows-2022
+            os-name: windows
+            target: x86_64-pc-windows-msvc
+            arch: x64
+          - rust-version: '1.86.0'
+            os: windows-2022
+            os-name: windows
+            target: x86_64-pc-windows-msvc
+            arch: x64
+
+          # Windows aarch64 - 暂时注释，等待 GitHub Actions 提供公共 ARM64 runner
+          # 当前 GitHub Actions 没有提供 windows-11-arm 公共 runner
+          # 如需构建，请使用 self-hosted runner
+          # - rust-version: '1.70.0'
+          #   os: windows-11-arm
+          #   os-name: windows
+          #   target: aarch64-pc-windows-msvc
+          #   arch: aarch64
+          # - rust-version: '1.75.0'
+          #   os: windows-11-arm
+          #   os-name: windows
+          #   target: aarch64-pc-windows-msvc
+          #   arch: aarch64
+          # - rust-version: '1.80.0'
+          #   os: windows-11-arm
+          #   os-name: windows
+          #   target: aarch64-pc-windows-msvc
+          #   arch: aarch64
+          # - rust-version: '1.85.0'
+          #   os: windows-11-arm
+          #   os-name: windows
+          #   target: aarch64-pc-windows-msvc
+          #   arch: aarch64
+          # - rust-version: '1.86.0'
+          #   os: windows-11-arm
+          #   os-name: windows
+          #   target: aarch64-pc-windows-msvc
+          #   arch: aarch64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust ${{ matrix.rust-version }} (${{ matrix.target }})
+        shell: bash
+        run: |
+          rustup toolchain install ${{ matrix.rust-version }}-${{ matrix.target }} \
+            --component clippy rustfmt \
+            --no-self-update
+          rustup default ${{ matrix.rust-version }}-${{ matrix.target }}
+
+      - name: Get Rust info
+        shell: bash
+        run: |
+          echo "Rust version:"
+          rustc --version
+          echo "Cargo version:"
+          cargo --version
+          echo "Rustfmt version:"
+          rustfmt --version
+          echo "Clippy version:"
+          cargo clippy --version
+          echo "Toolchain path:"
+          rustup show home
+          echo "Architecture: $(uname -m)"
+
+      - name: Create archive directory
+        shell: bash
+        run: |
+          mkdir -p archives
+
+      - name: Package Rust toolchain (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          TOOLCHAIN="${{ matrix.rust-version }}-${{ matrix.target }}"
+          ARCHIVE_NAME="rust-${{ matrix.rust-version }}-${{ matrix.target }}.tar.gz"
+          TOOLCHAIN_PATH="$(rustup show home)/toolchains/${TOOLCHAIN}"
+          cd "$TOOLCHAIN_PATH"
+          tar -czf "$GITHUB_WORKSPACE/archives/$ARCHIVE_NAME" .
+          echo "Archive created: $ARCHIVE_NAME"
+          ls -lh "$GITHUB_WORKSPACE/archives/$ARCHIVE_NAME"
+
+      - name: Package Rust toolchain (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $toolchain = "${{ matrix.rust-version }}-${{ matrix.target }}"
+          $archiveName = "rust-${{ matrix.rust-version }}-${{ matrix.target }}.zip"
+          $rustupHome = & rustup show home
+          $toolchainPath = Join-Path $rustupHome "toolchains\$toolchain"
+          Compress-Archive -Path "$toolchainPath\*" -DestinationPath "archives\$archiveName"
+          Write-Host "Archive created: $archiveName"
+          Get-Item "archives\$archiveName" | Format-List
+
+      - name: Generate checksums (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        working-directory: archives
+        run: |
+          for file in *; do
+            if [ -f "$file" ]; then
+              if command -v sha256sum > /dev/null; then
+                sha256sum "$file" > "$file.sha256"
+              else
+                shasum -a 256 "$file" > "$file.sha256"
+              fi
+              echo "Generated checksum for $file"
+            fi
+          done
+
+      - name: Generate checksums (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        working-directory: archives
+        run: |
+          Get-ChildItem -File | Where-Object { $_.Extension -eq '.zip' } | ForEach-Object {
+            $hash = Get-FileHash -Algorithm SHA256 -Path $_.FullName
+            "$($hash.Hash.ToLower())  $($_.Name)" | Out-File -FilePath "$($_.Name).sha256" -Encoding ASCII
+            Write-Host "Generated checksum for $($_.Name)"
+          }
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-${{ matrix.rust-version }}-${{ matrix.target }}
+          path: |
+            archives/*
+          retention-days: 90
+          compression-level: 0  # 已经压缩过了
+
+  create-release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-archives
+
+      - name: Display structure
+        run: |
+          ls -R all-archives
+
+      - name: Merge artifacts
+        run: |
+          mkdir -p release-archives
+          find all-archives -type f -exec cp {} release-archives/ \;
+          ls -lh release-archives/
+
+      - name: Generate release notes
+        run: |
+          cat > release-notes.md << 'EOF'
+          # Rust Archive Builds
+
+          This release contains pre-built Rust toolchain packages for multiple versions and platforms.
+
+          ## Supported Versions
+          - Rust 1.70.0
+          - Rust 1.75.0
+          - Rust 1.80.0
+          - Rust 1.85.0
+          - Rust 1.86.0
+
+          ## Supported Platforms
+          - **macOS**: x86_64-apple-darwin, aarch64-apple-darwin (在 Apple Silicon 上编译)
+          - **Linux**: x86_64-unknown-linux-gnu, aarch64-unknown-linux-gnu
+          - **Windows**: x86_64-pc-windows-msvc
+
+          ## Included Components
+          - rustc (Rust compiler)
+          - cargo (Package manager)
+          - std (Standard library)
+          - clippy (Linter)
+          - rustfmt (Code formatter)
+
+          ## Usage
+          1. Download the appropriate archive for your platform
+          2. Extract the archive to your desired location
+          3. Add the `bin/` directory to your `PATH`
+
+          ## Verification
+          Each archive includes a `.sha256` checksum file for verification:
+          ```bash
+          # Linux
+          sha256sum -c <archive-file>.tar.gz.sha256
+
+          # macOS
+          shasum -a 256 -c <archive-file>.tar.gz.sha256
+
+          # Windows PowerShell
+          Get-FileHash <archive-file>.zip -Algorithm SHA256
+          ```
+
+          Generated on: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          Commit: ${{ github.sha }}
+          EOF
+          cat release-notes.md
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Rust Archive Build #${{ github.run_number }}
+          body_path: release-notes.md
+          files: release-archives/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

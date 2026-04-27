@@ -1,0 +1,30 @@
+# Archives
+archives/
+*.tar.gz
+*.zip
+*.sha256
+
+# Rust
+target/
+*.rlib
+*.rmeta
+*.d
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
