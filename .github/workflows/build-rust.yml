@@ -195,7 +195,8 @@ jobs:
           rustup toolchain install ${{ matrix.rust-version }}-${{ matrix.target }} \
             --component clippy \
             --component rustfmt \
-            --no-self-update
+            --no-self-update \
+            --force-non-host
           rustup default ${{ matrix.rust-version }}-${{ matrix.target }}
 
       - name: Get Rust info
