@@ -192,12 +192,15 @@ jobs:
       - name: Install Rust ${{ matrix.rust-version }} (${{ matrix.target }})
         shell: bash
         run: |
-          rustup toolchain install ${{ matrix.rust-version }}-${{ matrix.target }} \
+          TOOLCHAIN="${{ matrix.rust-version }}-${{ matrix.target }}"
+          rustup toolchain install ${TOOLCHAIN} \
             --component clippy \
             --component rustfmt \
             --no-self-update \
             --force-non-host
-          rustup default ${{ matrix.rust-version }}-${{ matrix.target }}
+          # 避免在非宿主架构 runner 上使用 rustup default（不支持跨架构设置默认工具链）
+          # 改用 RUSTUP_TOOLCHAIN 环境变量让后续步骤自动使用指定工具链
+          echo "RUSTUP_TOOLCHAIN=${TOOLCHAIN}" >> "$GITHUB_ENV"
 
       - name: Get Rust info
         shell: bash

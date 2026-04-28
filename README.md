@@ -55,8 +55,8 @@
 
 ```bash
 # 示例：创建并推送 tag
-git tag v202604272144
-git push origin v202604272144
+git tag v202604281018
+git push origin v202604281018
 ```
 
 ### 构建矩阵
