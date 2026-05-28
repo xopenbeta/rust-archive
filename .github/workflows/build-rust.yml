@@ -15,7 +15,7 @@ jobs:
       matrix:
         include:
           # macOS Apple Silicon (macos-14) - 编译 x86_64 和 aarch64 两个版本
-          # 保留版本: 1.75.0 (1.7x latest), 1.85.0, 1.86.0, 1.89.0 (1.8x latest), 1.96.0 (1.9x latest)
+          # 保留版本: 1.75.0 (1.7x latest), 1.85.0, 1.86.0, 1.89.0 (1.8x latest), 1.95.0 (1.9x latest)
 
           # Rust 1.75.0 (1.7x latest)
           - rust-version: '1.75.0'
@@ -65,13 +65,13 @@ jobs:
             target: aarch64-apple-darwin
             arch: aarch64
 
-          # Rust 1.96.0 (1.9x latest / current stable)
-          - rust-version: '1.96.0'
+          # Rust 1.95.0 (1.9x latest / current stable)
+          - rust-version: '1.95.0'
             os: macos-14
             os-name: macos
             target: x86_64-apple-darwin
             arch: x64
-          - rust-version: '1.96.0'
+          - rust-version: '1.95.0'
             os: macos-14
             os-name: macos
             target: aarch64-apple-darwin
@@ -98,7 +98,7 @@ jobs:
             os-name: linux
             target: x86_64-unknown-linux-gnu
             arch: x64
-          - rust-version: '1.96.0'
+          - rust-version: '1.95.0'
             os: ubuntu-22.04
             os-name: linux
             target: x86_64-unknown-linux-gnu
@@ -125,7 +125,7 @@ jobs:
             os-name: linux
             target: aarch64-unknown-linux-gnu
             arch: aarch64
-          - rust-version: '1.96.0'
+          - rust-version: '1.95.0'
             os: ubuntu-22.04-arm
             os-name: linux
             target: aarch64-unknown-linux-gnu
@@ -152,7 +152,7 @@ jobs:
             os-name: windows
             target: x86_64-pc-windows-msvc
             arch: x64
-          - rust-version: '1.96.0'
+          - rust-version: '1.95.0'
             os: windows-2022
             os-name: windows
             target: x86_64-pc-windows-msvc
@@ -181,7 +181,7 @@ jobs:
           #   os-name: windows
           #   target: aarch64-pc-windows-msvc
           #   arch: aarch64
-          # - rust-version: '1.96.0'
+          # - rust-version: '1.95.0'
           #   os: windows-11-arm
           #   os-name: windows
           #   target: aarch64-pc-windows-msvc
@@ -320,7 +320,7 @@ jobs:
           - Rust 1.85.0
           - Rust 1.86.0
           - Rust 1.89.0 (1.8x latest)
-          - Rust 1.96.0 (1.9x latest / current stable)
+          - Rust 1.95.0 (1.9x latest / current stable)
 
           ## Supported Platforms
           - **macOS**: x86_64-apple-darwin, aarch64-apple-darwin (在 Apple Silicon 上编译)
